@@ -1,6 +1,6 @@
 # AI usage
 
-> **Read this first.** This project was built in a single session with **Claude Code** (Anthropic's coding agent), which did the research, design, code, tests and docs. This file records the meaningful AI-assisted decisions *as they actually happened in that session*. The person submitting should read it, correct anything that does not match their own understanding, and add their own view under each entry ("My call"). It is not a substitute for their judgement, and I have not invented any.
+> **How to read this.** This project was built in a single session with **Claude Code** (Anthropic's coding agent), which did the research, design, code, tests and docs, at my direction. Each entry below records a meaningful AI-assisted decision *as it happened in that session*. **"My call"** states my position: I set the goal and directed the work, I did not write or review this code line by line, and for each decision I say whether I accept it and why. This file was drafted by Claude Code at my request and I am submitting it as my own account.
 
 ## How AI was used, overall
 
@@ -20,7 +20,7 @@
 
 **Evidence.** `ScoreAggregator`, `ReviewSanitizer`, and their tests (`aggregation.test.ts`, `ai.test.ts`).
 
-**My call:** _(submitter to add)_
+**My call:** I asked for the whole assignment to be built and accepted this evaluation design. The brief itself says an LLD problem can have more than one valid solution, which rules out grading against a single reference answer, and it asks which parts should be deterministic and which use an LLM. Rules first, with a bounded AI review on top, answers both. I accept the trade-off that the AI part is not reproducible; that is why it is limited, checked and never the only source of a score.
 
 ## 2. A documented SDK helper was wrong for this project; I replaced it
 
@@ -32,7 +32,7 @@
 
 **Evidence.** `evaluation/ai/reviewSchema.ts` and the "review JSON schema" test.
 
-**My call:** _(submitter to add)_
+**My call:** I did not find this myself; Claude Code caught it by testing the helper's output instead of trusting the documentation, and I accept the replacement. What I take from it: a documented shortcut is not a guarantee, so the schema now has a test that fails if the constraint is lost.
 
 ## 3. AI-written tests caught a real bug in AI-written code, and I kept the test's verdict
 
@@ -44,7 +44,7 @@
 
 **Evidence.** `attempt.test.ts` ("regression: a learner cannot re-queue…"); `Capability.implicitOk`.
 
-**My call:** _(submitter to add)_
+**My call:** I did not write the tests or the fix. I accept both, and I rely on the automated suite (201 tests) rather than my own line-by-line review. The lesson I would state in an interview: AI-written code needs tests written to disagree with it, and when one fails the code gets fixed, not the test.
 
 ## 4. Using the product found problems the tests could not
 
@@ -56,7 +56,7 @@
 
 **Evidence.** `ScoreAggregator.structuralOnlyMax` and its tests; `useAttempt` (`refetchIntervalInBackground`).
 
-**My call:** _(submitter to add)_
+**My call:** I accept both changes. I would rather the platform say "Solid" and explain why than show a flattering "Strong" that only rule checks produced, and a learner who switches tabs during a slow review should come back to a finished page. I also accept that the first guess about the stuck page was wrong and was corrected by evidence.
 
 ## 5. Where I would not let the AI vouch for itself
 
@@ -68,7 +68,7 @@
 
 **Evidence.** `DemoDesignReviewer`, `AnthropicDesignReviewer` tests, README "Limitations".
 
-**My call:** _(submitter to add)_
+**My call:** I did not provide an API key during the build, so I accept that the live Claude call is untested and I state that openly in the README rather than hide it. Running it once with a real key is still outstanding. I accept the clearly labelled demo reviewer as the honest way to show the whole flow without one.
 
 ---
 
