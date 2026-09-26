@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { Rubric } from '../../src/domain/evaluation/Rubric';
-import { ScoreAggregator } from '../../src/evaluation/ScoreAggregator';
+import { DEFAULT_POLICY, ScoreAggregator } from '../../src/evaluation/ScoreAggregator';
 import { FeedbackPrioritizer } from '../../src/evaluation/FeedbackPrioritizer';
 import { ReportAssembler } from '../../src/evaluation/ReportAssembler';
 import { assessAll, result, ruleFinding } from '../helpers/evaluators';
@@ -17,6 +17,11 @@ describe('Rubric', () => {
     expect([0, 1, 2, 3, 4].map(Rubric.band)).toEqual(['Not yet', 'Weak', 'Developing', 'Solid', 'Strong']);
     expect(rubric.overall({ requirements: 4, responsibilities: 4, abstractions: 4, extensibility: 4, communication: 4 })).toBe(4);
   });
+  it('weights extensibility (25%) above requirements coverage (20%)', () => {
+    expect(rubric.dimension('extensibility').weight).toBe(0.25);
+    expect(rubric.dimension('requirements').weight).toBe(0.2);
+    expect(rubric.dimensions.map((d) => d.weight).reduce((a, b) => a + b, 0)).toBeCloseTo(1);
+  });
   it('rejects a rubric whose weights do not sum to one', () => {
     expect(() => new Rubric(rubric.dimensions.map((d) => ({ ...d, weight: 0.3 })))).toThrow(/sum to 1/);
   });
@@ -30,6 +35,11 @@ describe('ScoreAggregator', () => {
     expect(r.dimensions.every((d) => d.score === 2.5 && d.sources.join() === 'rules')).toBe(true);
     expect(r.overall).toBe(2.5);
     expect(r.band).toBe('Solid');
+  });
+
+  it('guard: the structural-only ceiling stays inside the "Solid" band (raising it to 3.5 would make unreviewed designs "Strong")', () => {
+    expect(Rubric.band(DEFAULT_POLICY.structuralOnlyMax)).toBe('Solid');
+    expect(Rubric.band(DEFAULT_POLICY.structuralOnlyMax + 0.1)).toBe('Strong');
   });
 
   it('cannot award the top band from structural checks alone, and says why', () => {

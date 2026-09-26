@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { AttemptDto, ProblemDto } from '../../../../shared/contracts';
+import { hintsWereOpened } from '../../lib/hints';
 import { STATUS_LABELS, formatWhen } from '../../lib/labels';
 import { useStartAttempt } from '../../lib/queries';
 import { Notice, Pill, Spinner } from '../ui';
@@ -66,6 +67,11 @@ export function ReviewView({ attempt, problem }: { attempt: AttemptDto; problem:
 
       <div className="stack">
         <EvaluationBanner attempt={attempt} />
+        {hintsWereOpened(attempt.id) && (
+          <Notice tone="info" title="You opened the hints on this attempt">
+            That is fine. As you read the feedback, notice which points you would have found on your own. The ones you would not have are exactly what to practise next.
+          </Notice>
+        )}
         {report ? (
           <div className="review-grid">
             <div className="stack">

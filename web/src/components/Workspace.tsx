@@ -95,7 +95,7 @@ export function Workspace({ attempt, problem }: { attempt: AttemptDto; problem: 
       <main className="page">
         <div className="ws-grid">
           <aside className="ws-brief">
-            <ProblemBrief problem={problem} compact />
+            <ProblemBrief problem={problem} compact attemptId={attempt.id} />
           </aside>
 
           <div className="stack">

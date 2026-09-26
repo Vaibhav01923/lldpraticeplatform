@@ -16,7 +16,9 @@ export interface AggregationPolicy {
   /** …and at most this much harsher. Being asymmetric is deliberate: praise must be earned by evidence. */
   aiMaxLower: number;
   /**
-   * Ceiling for a dimension that only structural checks have judged. Rules can confirm a design is well formed,
+   * Ceiling for a dimension that only structural checks have judged. 3.4 is deliberately the highest score that still
+   * reads "Solid": scores round to 0.1 and 3.5 is the "Strong" band, so a higher cap would let a design that no AI has
+   * reviewed be called Strong. (A guard test fails if this is raised into the Strong band.) Rules can confirm a design is well formed,
    * but not that responsibilities are cohesive or trade-offs sound, so they cannot on their own award the top band.
    */
   structuralOnlyMax: number;

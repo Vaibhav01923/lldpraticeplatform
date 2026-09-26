@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import type { ProblemDto } from '../../../shared/contracts';
+import { markHintsOpened } from '../lib/hints';
 
 /** The problem statement, kept beside the workspace so it is never a tab away while designing. */
-export function ProblemBrief({ problem, compact = false }: { problem: ProblemDto; compact?: boolean }) {
+export function ProblemBrief({ problem, compact = false, attemptId }: { problem: ProblemDto; compact?: boolean; attemptId?: string }) {
   const [tab, setTab] = useState<'requirements' | 'scope' | 'hints'>('requirements');
   const [showHints, setShowHints] = useState(false);
 
@@ -43,7 +44,7 @@ export function ProblemBrief({ problem, compact = false }: { problem: ProblemDto
             {!showHints ? (
               <>
                 <p className="small muted">Try without hints first. You will learn more from getting stuck a little.</p>
-                <button className="btn btn-sm" onClick={() => setShowHints(true)}>Show hints</button>
+                <button className="btn btn-sm" onClick={() => { setShowHints(true); if (attemptId) markHintsOpened(attemptId); }}>Show hints</button>
               </>
             ) : (
               problem.hints.map((h) => <div key={h} className="hint">{h}</div>)

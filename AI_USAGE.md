@@ -44,7 +44,7 @@
 
 **Evidence.** `attempt.test.ts` ("regression: a learner cannot re-queue…"); `Capability.implicitOk`.
 
-**My call:** I did not write the tests or the fix. I accept both, and I rely on the automated suite (201 tests) rather than my own line-by-line review. The lesson I would state in an interview: AI-written code needs tests written to disagree with it, and when one fails the code gets fixed, not the test.
+**My call:** I did not write the tests or the fix. I accept both, and I rely on the automated suite (205 tests) rather than my own line-by-line review. The lesson I would state in an interview: AI-written code needs tests written to disagree with it, and when one fails the code gets fixed, not the test.
 
 ## 4. Using the product found problems the tests could not
 
@@ -71,6 +71,14 @@
 **My call:** I did not provide an API key during the build, so I accept that the live Claude call is untested and I state that openly in the README rather than hide it. Running it once with a real key is still outstanding. I accept the clearly labelled demo reviewer as the honest way to show the whole flow without one.
 
 ---
+
+## My own changes to the platform
+
+After the build, I asked for a short list of small changes I could make myself, and picked three. Each was implemented by Claude Code; the choices and reasons are mine.
+
+- **Weight extensibility more (chosen).** I raised Extensibility from 20% to 25% of the overall score and lowered Requirements coverage from 25% to 20%. My reason: how a design copes with change is the real test of low-level design, so it should count at least as much as owning the requirements. The weights are now pinned by a test and written up in `docs/DESIGN.md`.
+- **Raise the no-AI score cap to 3.5 (chosen, then corrected).** I asked for this to make the platform a little less conservative when no AI review has run. The list I was given described 3.5 as the "top of Solid", which was **Claude's mistake**: in this scoring 3.5 is the *Strong* band, so it would have let an unreviewed design read as Strong. I accepted the correction, so the cap stays at 3.4 (the highest score that is still "Solid"), with a comment saying why and a guard test that fails if anyone raises it into the Strong band.
+- **A hint-usage note (chosen).** When a learner opens the hints while working on an attempt, the review page adds a short note asking them to notice which points they would have found alone, since those are what to practise next. It is a small UI-only feature, stored per attempt in the browser, and I checked it in the running app.
 
 ## What still needs a human
 

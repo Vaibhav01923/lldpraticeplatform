@@ -262,6 +262,8 @@ sequenceDiagram
 | Extensibility | variation points behind abstractions, change-scenario answers |
 | Communication | assumptions stated, trade-offs articulated |
 
+The overall score weights the dimensions **Responsibilities 25%, Extensibility 25%, Requirements 20%, Abstractions 20%, Trade-offs 10%**. Extensibility counts as much as ownership of responsibilities because how a design copes with change is the real test of LLD.
+
 Each rule reports the **criteria** it examined, each scored 0–4 with a weight and a reason, including the ones that passed. A dimension's structural score is the weighted mean of its criteria, so a score can always be explained as a list of named things.
 
 ### Blending, and the guardrails

@@ -25,7 +25,7 @@ export class Rubric {
       id: 'requirements',
       label: 'Requirements coverage',
       question: 'Does every requirement have a clear owner in the design?',
-      weight: 0.25,
+      weight: 0.2,
       levels: [
         'Little of the problem is represented.',
         'Several requirements have no owner in the design.',
@@ -64,7 +64,7 @@ export class Rubric {
       id: 'extensibility',
       label: 'Extensibility',
       question: 'Can the things that will change be changed by adding code rather than editing it?',
-      weight: 0.2,
+      weight: 0.25,
       levels: [
         'Any change would rewrite the core.',
         'Changes would touch many existing classes.',
